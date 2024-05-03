@@ -4,13 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build the code using Maven or another build automation tool
+                script {
                 try {
                         echo 'Build stage executed successfully'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error "Build failed: ${e.message}"
                     }
+                }
             }
         }
         stage('Unit and Integration Tests') {
@@ -40,42 +41,50 @@ pipeline {
         }
         stage('Security Scan') {
             steps {
+                script {
                 try {
                          echo 'Security stage executed successfully'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error "Test failed: ${e.message}"
                     }
+                }
             }
         }
         stage('Deploy to Staging') {
             steps {
+                script {
                 try {
                          echo 'Deploy stage executed successfully'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error "Test failed: ${e.message}"
                     }
+                }
             }
         }
         stage('Integration Tests on Staging') {
             steps {
+                script {
                 try {
                         echo 'Integration stage executed successfully'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error "Test failed: ${e.message}"
                     }
+                }
             }
         }
         stage('Deploy to Production') {
             steps {
+                script {
                 try {
                         echo 'Production stage executed successfully'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error "Test failed: ${e.message}"
                     }
+                }
             }
         }
 

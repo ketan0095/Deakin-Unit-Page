@@ -5,56 +5,90 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the code using Maven or another build automation tool
-                echo "Build Stage"
+                try {
+                        echo 'Build stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Build failed: ${e.message}"
+                    }
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests using JUnit or another test automation tool
-                // Run integration tests using Selenium or another integration testing tool
-                echo "Testing Stage"
+                // Test steps
+                script {
+                    try {
+                        echo 'Test stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Test failed: ${e.message}"
+                    }
+                }
             }
         }
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool like SonarQube or Checkstyle
-                echo "Code Analysis Stage"
+                script {
+                    try {
+                        echo 'Code Analysis stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Test failed: ${e.message}"
+                    }
+                }
             }
         }
         stage('Security Scan') {
             steps {
-                // Perform a security scan using tools like OWASP ZAP or SonarQube
-                echo "Security Stage"
+                try {
+                         echo 'Security stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Test failed: ${e.message}"
+                    }
             }
         }
         stage('Deploy to Staging') {
             steps {
-                // Deploy the application to a staging server, e.g., AWS EC2 instance
-                echo "Deployment Stage"
+                try {
+                         echo 'Deploy stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Test failed: ${e.message}"
+                    }
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on the staging environment
-                echo "Integration Stage"
+                try {
+                        echo 'Integration stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Test failed: ${e.message}"
+                    }
             }
         }
         stage('Deploy to Production') {
             steps {
-                // Deploy the application to a production server, e.g., AWS EC2 instance
-                echo "Production Stage"
-            }
-
-            post {
-                success {
-                    // Send email notification on successful deployment
-                    emailext (
-                        to: 'shetyeketan18@gmail.com',
-                        subject: 'Deployment Successful',
-                        body: 'The deployment was successful. Please verify.'
-                    )
-                }
+                try {
+                        echo 'Production stage executed successfully'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Test failed: ${e.message}"
+                    }
             }
         }
+
+        post {
+        always {
+            // Email notification with stage status and logs attachment
+            emailext (
+                subject: "Pipeline ${currentBuild.result}: ${env.JOB_NAME}",
+                body: "The pipeline build ${currentBuild.result}.",
+                to: 'recipient@example.com',
+                attachmentsPattern: 'build/**/*.log'
+            )
+        }
+    }
     }
 }

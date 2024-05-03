@@ -86,18 +86,19 @@ pipeline {
                     }
                 }
             }
+
+            post {
+                success {
+                    // Send email notification on successful deployment
+                    emailext (
+                        to: 'shetyeketan18@gmail.com',
+                        subject: 'Deployment Successful',
+                        body: 'The deployment was successful. Please verify.'
+                    )
+                }
+            }
         }
     }
 
-    post {
-        always {
-            // Email notification with stage status and logs attachment
-            emailext (
-                subject: "Pipeline ${currentBuild.result}: ${env.JOB_NAME}",
-                body: "The pipeline build ${currentBuild.result}.",
-                to: 'ketan@askgalore.com',
-                attachmentsPattern: 'build/**/*.log'
-            )
-        }
-    }
+    
 }

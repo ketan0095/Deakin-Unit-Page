@@ -87,8 +87,9 @@ pipeline {
                 }
             }
         }
+    }
 
-        post {
+    post {
         always {
             // Email notification with stage status and logs attachment
             emailext (
@@ -98,6 +99,5 @@ pipeline {
                 attachmentsPattern: 'build/**/*.log'
             )
         }
-    }
     }
 }

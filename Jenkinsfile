@@ -1,5 +1,12 @@
 pipeline {
     agent any
+
+    environment {
+        DIRECTORY_PATH = "C:\\ketan personal\\Deakin\\Study Material\\SIT 753\\Week 4\\Deakin-Unit-Page"
+        TESTING_ENVIRONMENT = "nextjs-app-testing-environment"
+        PRODUCTION_ENVIRONMENT = "Ketan_Shetye_nextjs-app-production-environment"
+        JENKINS_LOG_PATH="C:\\ProgramData\\Jenkins\\.jenkins\\jobs\\Github-Jenkins-pipeline\\builds\\21\\log"
+    }
     
     stages {
         stage('Build') {
@@ -68,7 +75,7 @@ pipeline {
             emailext body:'Pipeline succeeded. All stages complted.',
                      subject: 'Pipeline status: Successful',
                      to:'shetyeketan18@gmail.com',
-                     attachmentsPattern: 'build/**/*.log'
+                     attachmentsPattern: '${JENKINS_LOG_PATH}'
         }
 
         failure{

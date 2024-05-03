@@ -45,16 +45,35 @@ pipeline {
                 echo "Production Stage"
             }
 
-            post {
-                success {
-                    // Send email notification on successful deployment
-                    emailext (
-                        to: 'shetyeketan18@gmail.com',
-                        subject: 'Deployment Successful',
-                        body: 'The deployment was successful. Please verify.'
-                    )
-                }
-            }
+            // post {
+            //     success {
+            //         // Send email notification on successful deployment
+            //         emailext (
+            //             to: 'shetyeketan18@gmail.com',
+            //             subject: 'Deployment Successful',
+            //             body: 'The deployment was successful. Please verify.'
+            //         )
+            //     }
+            // }
+        }
+    }
+
+
+    post{
+        always{
+            echo 'Pipeline Completed.'
+        }
+
+        success{
+            emailext body:'Pipeline succeeded. All stages complted.'
+                     subject: 'Pipeline status: Successful'
+                     to:'shetyeketan18@gmail.com'
+        }
+
+        failure{
+            emailext body:'Pipeline failed. Check logs for detail'
+                     subject: 'Pipeline status: Failure'
+                     to:'shetyeketan18@gmail.com'
         }
     }
 }

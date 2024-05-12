@@ -71,7 +71,7 @@ pipeline {
             emailext body:'Pipeline failed. Check logs for detail',
                      subject: 'Pipeline status: Failure',
                      to:'shetyeketan18@gmail.com',
-                     attachmentsPattern: 'build/**/*.log'
+                     attachmentsPattern: '**/*.log'
         }
     }
 }

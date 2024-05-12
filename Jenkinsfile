@@ -64,7 +64,7 @@ pipeline {
             emailext body:'Pipeline succeeded. All stages complted.',
                      subject: 'Pipeline status: Successful',
                      to:'shetyeketan18@gmail.com',
-                     attachmentsPattern: '${JENKINS_LOG_PATH}'
+                     attachmentsPattern: '**/*.log'
         }
 
         failure{
